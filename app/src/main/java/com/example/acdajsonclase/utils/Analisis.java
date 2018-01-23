@@ -13,13 +13,14 @@ public class Analisis {
     public static String analizarPrimitiva(JSONObject texto) throws JSONException {
         JSONArray jsonContenido;
         String tipo;
+        JSONObject item;
         StringBuilder cadena = new StringBuilder();
         tipo = texto.getString("info");
         jsonContenido = new JSONArray(texto.getString("sorteo"));
         cadena.append("Sorteos de la Primitiva:" + "\n");
 
         for (int i = 0; i < jsonContenido.length(); i++) {
-
+            item = jsonContenido.getJSONObject(i);
         }
 
         return cadena.toString();
