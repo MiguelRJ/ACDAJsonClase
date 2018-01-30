@@ -27,7 +27,7 @@ public class Analisis {
 
         for (int i = 0; i < jsonContenido.length(); i++) {
             item = jsonContenido.getJSONObject(i);
-            cadena.append(tipo + ":" + item.getString("fecha") + "\n");
+            cadena.append("\n" + tipo + ": " + item.getString("fecha") + "\n");
             cadena.append(
                     item.getInt("numero1") + "," +
                             item.getInt("numero2") + "," +
