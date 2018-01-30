@@ -42,14 +42,34 @@ public class Analisis {
     }
 
     public static ArrayList<Contacto> analizarContactos(JSONObject respuesta) throws JSONException {
+
         JSONArray jAcontactos;
         JSONObject jOcontacto, jOtelefono;
         Contacto contacto;
         Telefono telefono;
+
+        jAcontactos = new JSONArray(respuesta.getString("contactos"));
+
         ArrayList<Contacto> personas = new ArrayList<>();
-        // añadir contactos (en JSON) a personas
 
+        for (int i = 0; i < jAcontactos.length(); i++) {
+            jOcontacto = jAcontactos.getJSONObject(i);
 
+            contacto = new Contacto();
+            contacto.setNombre(jOcontacto.getString("nombre"));
+            contacto.setDireccion(jOcontacto.getString("direccion"));
+            contacto.setEmail(jOcontacto.getString("email"));
+
+            jOtelefono = jOcontacto.getJSONObject("telefono");
+
+            telefono = new Telefono();
+            telefono.setCasa(jOtelefono.getString("casa"));
+            telefono.setMovil(jOtelefono.getString("movil"));
+            telefono.setTrabajo(jOtelefono.getString("trabajo"));
+
+            contacto.setTelefono(telefono);
+            personas.add(contacto);
+        }
 
         return personas;
     }

@@ -13,8 +13,10 @@ import android.widget.Toast;
 import com.example.acdajsonclase.R;
 import com.example.acdajsonclase.network.RestClient;
 import com.example.acdajsonclase.ui.contactos.Contacto;
+import com.example.acdajsonclase.utils.Analisis;
 import com.loopj.android.http.JsonHttpResponseHandler;
 
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
@@ -61,19 +63,25 @@ public class ContactosActivity extends AppCompatActivity implements View.OnClick
             @Override
             public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
                 progreso.dismiss();
-                showError("ERROR: "+statusCode);
+                showError("ERROR: "+statusCode+ "\n" + throwable.getMessage());
             }
 
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+                try {
+                    contactos = Analisis.analizarContactos(response);
+                    mostrar();
+                } catch (JSONException e) {
+                    showError("ERROR: "+statusCode);
+                }
                 progreso.dismiss();
-                mostrar();
+
             }
         } );
     }
 
     private void mostrar() {
-        if (contactos != null)
+        if (contactos != null) {
             if (adapter == null) {
                 adapter = new ArrayAdapter<Contacto>(this, android.R.layout.simple_list_item_1, contactos);
                 lwContactos.setAdapter(adapter);
@@ -81,7 +89,7 @@ public class ContactosActivity extends AppCompatActivity implements View.OnClick
                 adapter.clear();
                 adapter.addAll(contactos);
             }
-        else {
+        } else {
             Toast.makeText(getApplicationContext(), "Error al crear la lista", Toast.LENGTH_SHORT).show();
         }
     }
