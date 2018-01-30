@@ -1,7 +1,7 @@
 package com.example.acdajsonclase.utils;
 
-import com.example.acdajsonclase.ui.contactos.Contacto;
-import com.example.acdajsonclase.ui.contactos.Telefono;
+import com.example.acdajsonclase.ui.E2Contactos.model.Contacto;
+import com.example.acdajsonclase.ui.E2Contactos.model.Telefono;
 
 import org.json.JSONArray;
 import org.json.JSONException;

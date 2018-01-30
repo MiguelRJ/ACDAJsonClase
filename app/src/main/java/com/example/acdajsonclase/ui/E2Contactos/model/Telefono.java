@@ -1,4 +1,4 @@
-package com.example.acdajsonclase.ui.contactos;
+package com.example.acdajsonclase.ui.E2Contactos.model;
 
 /**
  * Created by usuario on 25/01/18.

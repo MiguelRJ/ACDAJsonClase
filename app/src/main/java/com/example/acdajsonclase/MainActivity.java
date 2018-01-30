@@ -6,8 +6,8 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 
-import com.example.acdajsonclase.ui.ContactosActivity;
-import com.example.acdajsonclase.ui.ContactosGsonActivity;
+import com.example.acdajsonclase.ui.E2Contactos.ContactosActivity;
+import com.example.acdajsonclase.ui.E3ContactosGson.ContactosGsonActivity;
 import com.example.acdajsonclase.ui.CreacionJsonActivity;
 import com.example.acdajsonclase.ui.PrimitivaActivity;
 import com.example.acdajsonclase.ui.RetrofitActivity;
