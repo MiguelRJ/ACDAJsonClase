@@ -101,7 +101,7 @@ public class ContactosGsonActivity extends AppCompatActivity implements View.OnC
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-        Toast.makeText(this, "Nombre: " + person.getContacts().get(position).getName(),
+        Toast.makeText(this, "Nombre: " + ((Contact)parent.getSelectedItem()).getName(),
                 Toast.LENGTH_SHORT).show();
     }
 
