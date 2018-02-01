@@ -2,6 +2,8 @@ package com.example.acdajsonclase.utils;
 
 import com.example.acdajsonclase.ui.E2Contactos.model.Contacto;
 import com.example.acdajsonclase.ui.E2Contactos.model.Telefono;
+import com.example.acdajsonclase.ui.E3ContactosGson.model.Contact;
+import com.example.acdajsonclase.ui.E3ContactosGson.model.Phone;
 
 import org.json.JSONArray;
 import org.json.JSONException;

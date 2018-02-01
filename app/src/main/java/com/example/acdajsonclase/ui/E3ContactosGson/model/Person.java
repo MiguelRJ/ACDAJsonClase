@@ -13,13 +13,13 @@ public class Person {
 
     @SerializedName("contacts")
     @Expose
-    private List<model.Contact> contacts = null;
+    private List<Contact> contacts = null;
 
-    public List<model.Contact> getContacts() {
+    public List<Contact> getContacts() {
         return contacts;
     }
 
-    public void setContacts(List<model.Contact> contacts) {
+    public void setContacts(List<Contact> contacts) {
         this.contacts = contacts;
     }
 

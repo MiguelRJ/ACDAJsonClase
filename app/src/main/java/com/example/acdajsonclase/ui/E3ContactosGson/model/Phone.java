@@ -43,4 +43,13 @@ public class Phone {
         this.work = work;
     }
 
+    @Override
+    public String toString() {
+        return "Phone{" +
+                "home='" + home + '\'' +
+                ", mobile='" + mobile + '\'' +
+                ", work='" + work + '\'' +
+                '}';
+    }
+
 }

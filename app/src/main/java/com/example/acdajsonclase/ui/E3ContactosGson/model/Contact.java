@@ -20,7 +20,7 @@ public class Contact {
     private String email;
     @SerializedName("phone")
     @Expose
-    private model.Phone phone;
+    private Phone phone;
 
     public String getName() {
         return name;
@@ -46,12 +46,21 @@ public class Contact {
         this.email = email;
     }
 
-    public model.Phone getPhone() {
+    public Phone getPhone() {
         return phone;
     }
 
-    public void setPhone(model.Phone phone) {
+    public void setPhone(Phone phone) {
         this.phone = phone;
     }
 
+    @Override
+    public String toString() {
+        return "Contact{" +
+                "name='" + name + '\'' +
+                ", address='" + address + '\'' +
+                ", email='" + email + '\'' +
+                ", phone=" + phone +
+                '}';
+    }
 }
