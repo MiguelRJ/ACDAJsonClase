@@ -9,14 +9,18 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.Toast;
+
 import com.example.acdajsonclase.R;
 import com.example.acdajsonclase.network.RestClient;
 import com.example.acdajsonclase.ui.E3ContactosGson.model.Contact;
 import com.example.acdajsonclase.ui.E3ContactosGson.model.Person;
 import com.google.gson.Gson;
 import com.loopj.android.http.JsonHttpResponseHandler;
+
 import org.json.JSONObject;
+
 import java.util.ArrayList;
+
 import cz.msebera.android.httpclient.Header;
 
 public class ContactosGsonActivity extends AppCompatActivity implements View.OnClickListener, AdapterView.OnItemClickListener {
@@ -60,9 +64,31 @@ public class ContactosGsonActivity extends AppCompatActivity implements View.OnC
             }
 
             @Override
+            public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
+                progreso.dismiss();
+                StringBuilder message = new StringBuilder();
+                message.append("Fallo en la descarga (string)");
+                if (throwable != null) {
+                    message.append(": " + statusCode + "\n" + throwable.getMessage());
+                    if (responseString != null) {
+                        message.append("\n" + responseString.toString());
+                    }
+                }
+                showError("ERROR: " + message.toString());
+            }
+
+            @Override
             public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
                 progreso.dismiss();
-                showError("ERROR: "+statusCode+ "\n" + throwable.getMessage());
+                StringBuilder message = new StringBuilder();
+                message.append("Fallo en la descarga (json)");
+                if (throwable != null) {
+                    message.append(": " + statusCode + "\n" + throwable.getMessage());
+                    if (errorResponse != null) {
+                        message.append("\n" + errorResponse.toString());
+                    }
+                }
+                showError("ERROR: " + message.toString());
             }
 
             @Override
@@ -73,7 +99,7 @@ public class ContactosGsonActivity extends AppCompatActivity implements View.OnC
                     person = gson.fromJson(response.toString(), Person.class);
                     mostrar();
                 } catch (Exception e) {
-                    Toast.makeText(getApplicationContext(), "ERROR: "+e.getMessage(),Toast.LENGTH_LONG).show();
+                    Toast.makeText(getApplicationContext(), "ERROR: " + e.getMessage(), Toast.LENGTH_LONG).show();
 
                 }
                 progreso.dismiss();
@@ -82,14 +108,14 @@ public class ContactosGsonActivity extends AppCompatActivity implements View.OnC
 
         });
     }
+
     private void mostrar() {
         if (person != null) {
 
             if (adapter == null) {
                 adapter = new ArrayAdapter<Contact>(this, android.R.layout.simple_list_item_1, person.getContacts());
                 lwContactos.setAdapter(adapter);
-            }
-            else {
+            } else {
                 adapter.clear();
                 adapter.addAll(person.getContacts());
             }
@@ -101,16 +127,17 @@ public class ContactosGsonActivity extends AppCompatActivity implements View.OnC
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-        Toast.makeText(this, "Nombre: " + ((Contact)parent.getSelectedItem()).getName(),
+        Toast.makeText(this, "Nombre: " + ((Contact) parent.getSelectedItem()).getName(),
                 Toast.LENGTH_SHORT).show();
     }
 
     /**
      * Para mostrar errores hara un Toast y aparte mostrara el error en pantalla
+     *
      * @param message
      */
-    public void showError(String message){
-        Toast.makeText(this,message,Toast.LENGTH_SHORT).show();
+    public void showError(String message) {
+        Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
     }
 
 
