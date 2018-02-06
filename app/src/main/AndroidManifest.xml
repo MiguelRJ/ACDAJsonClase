@@ -23,7 +23,7 @@
         <activity android:name=".ui.E2Contactos.ContactosActivity" />
         <activity android:name=".ui.E3ContactosGson.ContactosGsonActivity" />
         <activity android:name=".ui.CreacionJsonActivity" />
-        <activity android:name=".ui.RetrofitActivity"></activity>
+        <activity android:name=".ui.E5Repo.RetrofitActivity"></activity>
     </application>
 
 </manifest>

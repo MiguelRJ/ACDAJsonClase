@@ -10,7 +10,7 @@ import com.example.acdajsonclase.ui.E2Contactos.ContactosActivity;
 import com.example.acdajsonclase.ui.E3ContactosGson.ContactosGsonActivity;
 import com.example.acdajsonclase.ui.CreacionJsonActivity;
 import com.example.acdajsonclase.ui.PrimitivaActivity;
-import com.example.acdajsonclase.ui.RetrofitActivity;
+import com.example.acdajsonclase.ui.E5Repo.RetrofitActivity;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
