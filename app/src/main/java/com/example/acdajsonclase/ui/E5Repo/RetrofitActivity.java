@@ -1,6 +1,5 @@
 package com.example.acdajsonclase.ui.E5Repo;
 
-import android.app.ProgressDialog;
 import android.content.Intent;
 import android.net.Uri;
 import android.support.v7.app.AppCompatActivity;
@@ -11,28 +10,13 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
-
 import com.example.acdajsonclase.R;
 import com.example.acdajsonclase.network.ApiAdapter;
-import com.example.acdajsonclase.network.ApiService;
-import com.example.acdajsonclase.network.RestClient;
-import com.example.acdajsonclase.ui.E3ContactosGson.model.Person;
 import com.example.acdajsonclase.ui.E5Repo.model.Repo;
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
-import com.loopj.android.http.JsonHttpResponseHandler;
-
-import org.json.JSONObject;
-
 import java.util.ArrayList;
-import java.util.List;
-
-import cz.msebera.android.httpclient.Header;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-import retrofit2.Retrofit;
-import retrofit2.converter.gson.GsonConverterFactory;
 
 /**
  * link de repos de la api de github
@@ -48,7 +32,6 @@ public class RetrofitActivity extends AppCompatActivity implements View.OnClickL
     private ArrayList<Repo> repos;
     private String WEB;
     private String USER;
-    private ApiService apiService;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -67,27 +50,22 @@ public class RetrofitActivity extends AppCompatActivity implements View.OnClickL
             public void onClick(View view, final int position) {
                 Uri uri = Uri.parse((String) repos.get(position).getHtmlUrl());
                 Intent intent = new Intent(Intent.ACTION_VIEW, uri);
-                if (intent.resolveActivity(getPackageManager()) != null)
+                if (intent.resolveActivity(getPackageManager()) != null) {
                     startActivity(intent);
-                else
+                } else {
                     Toast.makeText(getApplicationContext(), "No hay un navegador",
                             Toast.LENGTH_SHORT).show();
-                Toast.makeText(RetrofitActivity.this, "Single Click on position        :"+position,
+                }
+                Toast.makeText(RetrofitActivity.this, "Single Click on position: "+position,
                         Toast.LENGTH_SHORT).show();
             }
 
             @Override
             public void onLongClick(View view, int position) {
-                Toast.makeText(RetrofitActivity.this, "Long press on position :"+position,
+                Toast.makeText(RetrofitActivity.this, "Long press on position: "+position,
                         Toast.LENGTH_LONG).show();
             }
         }));
-
-        Gson gson = new GsonBuilder()
-                .setDateFormat("dd-MM-yyy'T'HH:mm:ssZ")
-                .create();
-
-        apiService = ApiAdapter.getApiService();
     }
 
     @Override
@@ -102,15 +80,13 @@ public class RetrofitActivity extends AppCompatActivity implements View.OnClickL
 
             } else {
 
-                WEB = "https://api.github.com/users/" + USER + "/repos";
-
                 Call<ArrayList<Repo>> call = ApiAdapter.getApiService().reposForUser(USER);
 
                 call.enqueue(new Callback<ArrayList<Repo>>() {
                     @Override
                     public void onResponse(Call<ArrayList<Repo>> call, Response<ArrayList<Repo>> response) {
                         // si recibe respuesta entra aqui aunque sea un error 404
-                        int statusCode = response.code();
+                        //int statusCode = response.code();
                         if (response.isSuccessful()) {
                             repos = response.body();
                             adapter.setRepos(repos);
@@ -144,9 +120,9 @@ public class RetrofitActivity extends AppCompatActivity implements View.OnClickL
 
 
     /**
-            * Para mostrar errores hara un Toast y aparte mostrara el error en pantalla
+     * * Para mostrar errores hara un Toast y aparte mostrara el error en pantalla
      *
-             * @param message
+     * @param message
      */
     public void showError(String message) {
         Toast.makeText(this, message, Toast.LENGTH_SHORT).show();

@@ -53,7 +53,7 @@ public class ReposAdapter extends RecyclerView.Adapter<ReposAdapter.ViewHolder> 
     public void onBindViewHolder(ViewHolder holder, int position) {
         Repo repo = mRepos.get(position);
         holder.txvUser.setText(repo.getName());
-        holder.txvDate.setText(repo.getCreatedAt());
+        holder.txvDate.setText(repo.getCreatedAt().toString());
         holder.txvDescription.setText(String.valueOf(repo.getDescription()));
     }
 

@@ -4,6 +4,8 @@ package com.example.acdajsonclase.ui.E5Repo.model;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
+import java.util.Date;
+
 public class Repo {
 
     @SerializedName("id")
@@ -143,7 +145,7 @@ public class Repo {
     private String deploymentsUrl;
     @SerializedName("created_at")
     @Expose
-    private String createdAt;
+    private Date createdAt;
     @SerializedName("updated_at")
     @Expose
     private String updatedAt;
@@ -580,11 +582,11 @@ public class Repo {
         this.deploymentsUrl = deploymentsUrl;
     }
 
-    public String getCreatedAt() {
+    public Date getCreatedAt() {
         return createdAt;
     }
 
-    public void setCreatedAt(String createdAt) {
+    public void setCreatedAt(Date createdAt) {
         this.createdAt = createdAt;
     }
 

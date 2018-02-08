@@ -1,5 +1,10 @@
 package com.example.acdajsonclase.network;
 
+import com.google.gson.FieldNamingPolicy;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+
+import java.text.DateFormat;
 import java.util.concurrent.TimeUnit;
 
 import okhttp3.OkHttpClient;
@@ -15,25 +20,42 @@ public class ApiAdapter {
 
     private static ApiService API_SERVICE;
 
-    public static ApiService getApiService() {
+    public static synchronized ApiService getApiService() {
 
         // Creamos un interceptor y le indicamos el log level a usar
-        HttpLoggingInterceptor logging = new HttpLoggingInterceptor();
-        logging.setLevel(HttpLoggingInterceptor.Level.BODY);
+        //HttpLoggingInterceptor logging = new HttpLoggingInterceptor();
+        //logging.setLevel(HttpLoggingInterceptor.Level.BODY);
 
         // Asociamos el interceptor a las peticiones
 
-        OkHttpClient.Builder httpClient = new OkHttpClient.Builder();
-        httpClient.addInterceptor(logging);
+        //OkHttpClient.Builder httpClient = new OkHttpClient.Builder();
+        //httpClient.addInterceptor(logging);
 
         String baseUrl = "https://api.github.com/";
 
         if (API_SERVICE == null) {
+
+            OkHttpClient okHttpClient = new OkHttpClient.Builder()
+                    .connectTimeout(1, TimeUnit.MINUTES)
+                    .readTimeout(10, TimeUnit.SECONDS)
+                    .writeTimeout(5, TimeUnit.SECONDS)
+                    .build();
+
+            Gson gson = new GsonBuilder()
+                    .enableComplexMapKeySerialization()
+                    .serializeNulls()
+                    .setDateFormat("yyyy-mm-dd")
+                    .setFieldNamingPolicy(FieldNamingPolicy.UPPER_CAMEL_CASE)
+                    .setPrettyPrinting()
+                    .setVersion(1.0)
+                    .create();
+
             Retrofit retrofit = new Retrofit.Builder()
                     .baseUrl(baseUrl)
-                    .addConverterFactory(GsonConverterFactory.create())
-                    .client(httpClient.build()) // <-- usamos el log level
+                    .addConverterFactory(GsonConverterFactory.create(gson))
+                    .client(okHttpClient) // <-- usamos el log level
                     .build();
+
             API_SERVICE = retrofit.create(ApiService.class);
         }
 
