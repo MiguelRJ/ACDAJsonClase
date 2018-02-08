@@ -1,5 +1,7 @@
 package com.example.acdajsonclase.network;
 
+import java.util.concurrent.TimeUnit;
+
 import okhttp3.OkHttpClient;
 import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Retrofit;
@@ -20,6 +22,7 @@ public class ApiAdapter {
         logging.setLevel(HttpLoggingInterceptor.Level.BODY);
 
         // Asociamos el interceptor a las peticiones
+
         OkHttpClient.Builder httpClient = new OkHttpClient.Builder();
         httpClient.addInterceptor(logging);
 

@@ -1,9 +1,7 @@
 package com.example.acdajsonclase.network;
 
 import com.example.acdajsonclase.ui.E5Repo.model.Repo;
-
-import java.util.List;
-
+import java.util.ArrayList;
 import retrofit2.Call;
 import retrofit2.http.GET;
 import retrofit2.http.Path;
@@ -14,7 +12,12 @@ import retrofit2.http.Path;
 
 public interface ApiService {
 
-    @GET("/users/{user}/repos")
-    Call<List<Repo>> reposForUser(@Path("user") String user);
+    /**
+     * Llamada teniendo en cuenta la base url creada en apiadapter
+     * @param username
+     * @return
+     */
+    @GET("/users/{username}/repos")
+    Call<ArrayList<Repo>> reposForUser(@Path("username") String username);
 
 }
