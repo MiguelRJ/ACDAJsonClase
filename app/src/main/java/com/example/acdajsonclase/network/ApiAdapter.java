@@ -41,18 +41,9 @@ public class ApiAdapter {
                     .writeTimeout(5, TimeUnit.SECONDS)
                     .build();
 
-            Gson gson = new GsonBuilder()
-                    .enableComplexMapKeySerialization()
-                    .serializeNulls()
-                    .setDateFormat("yyyy-mm-dd")
-                    .setFieldNamingPolicy(FieldNamingPolicy.UPPER_CAMEL_CASE)
-                    .setPrettyPrinting()
-                    .setVersion(1.0)
-                    .create();
-
             Retrofit retrofit = new Retrofit.Builder()
                     .baseUrl(baseUrl)
-                    .addConverterFactory(GsonConverterFactory.create(gson))
+                    .addConverterFactory(GsonConverterFactory.create())
                     .client(okHttpClient) // <-- usamos el log level
                     .build();
 

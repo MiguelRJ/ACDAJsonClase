@@ -10,6 +10,7 @@ import android.widget.TextView;
 import com.example.acdajsonclase.R;
 import com.example.acdajsonclase.ui.E5Repo.model.Repo;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -53,7 +54,8 @@ public class ReposAdapter extends RecyclerView.Adapter<ReposAdapter.ViewHolder> 
     public void onBindViewHolder(ViewHolder holder, int position) {
         Repo repo = mRepos.get(position);
         holder.txvUser.setText(repo.getName());
-        holder.txvDate.setText(repo.getCreatedAt().toString());
+        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy  HH:mm:ss");
+        holder.txvDate.setText(sdf.format(repo.getCreatedAt()));
         holder.txvDescription.setText(String.valueOf(repo.getDescription()));
     }
 

@@ -22,7 +22,7 @@ import retrofit2.Response;
  * link de repos de la api de github
  * https://api.github.com/users/MiguelRJ/repos
  */
-public class RetrofitActivity extends AppCompatActivity implements View.OnClickListener {
+public class RetrofitActivity extends AppCompatActivity implements View.OnClickListener, Callback<ArrayList<Repo>> {
 
     EditText edtUser;
     Button btnRepo;
@@ -71,50 +71,43 @@ public class RetrofitActivity extends AppCompatActivity implements View.OnClickL
     @Override
     public void onClick(View view) {
         if (view == btnRepo) {
-
             USER = edtUser.getText().toString();
-
             if (USER.isEmpty()){
-
                 showError("Indica un usuario");
-
             } else {
-
                 Call<ArrayList<Repo>> call = ApiAdapter.getApiService().reposForUser(USER);
-
-                call.enqueue(new Callback<ArrayList<Repo>>() {
-                    @Override
-                    public void onResponse(Call<ArrayList<Repo>> call, Response<ArrayList<Repo>> response) {
-                        // si recibe respuesta entra aqui aunque sea un error 404
-                        //int statusCode = response.code();
-                        if (response.isSuccessful()) {
-                            repos = response.body();
-                            adapter.setRepos(repos);
-                            showError("response");
-                        } else {
-                            StringBuilder message = new StringBuilder();
-                            message.append("Error en la descarga: "+response.code()+"\n");
-                            if (response.body() != null){
-                                message.append(response.body()+"\n");
-                            }
-                            if (response.errorBody() != null){
-                                message.append(response.errorBody()+"\n");
-                            }
-                            showError(message.toString());
-                        }
-
-                    }
-
-                    @Override
-                    public void onFailure(Call<ArrayList<Repo>> call, Throwable t) {
-                        if (t != null){
-                            showError("Fallo en la comunicacion: "+t.getMessage());
-                        }
-                    }
-                });
-
+                call.enqueue(this);
             }
 
+        }
+    }
+
+    @Override
+    public void onResponse(Call<ArrayList<Repo>> call, Response<ArrayList<Repo>> response) {
+        // si recibe respuesta entra aqui aunque sea un error 404
+        //int statusCode = response.code();
+        if (response.isSuccessful()) {
+            repos = response.body();
+            adapter.setRepos(repos);
+            showError("response");
+        } else {
+            StringBuilder message = new StringBuilder();
+            message.append("Error en la descarga: "+response.code()+"\n");
+            if (response.body() != null){
+                message.append(response.body()+"\n");
+            }
+            if (response.errorBody() != null){
+                message.append(response.errorBody()+"\n");
+            }
+            showError(message.toString());
+        }
+
+    }
+
+    @Override
+    public void onFailure(Call<ArrayList<Repo>> call, Throwable t) {
+        if (t != null){
+            showError("Fallo en la comunicacion: "+t.getMessage());
         }
     }
 
@@ -127,4 +120,6 @@ public class RetrofitActivity extends AppCompatActivity implements View.OnClickL
     public void showError(String message) {
         Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
     }
+
+
 }
